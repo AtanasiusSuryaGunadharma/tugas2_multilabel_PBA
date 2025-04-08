@@ -18,23 +18,15 @@ def get_base64(bin_file):
     
 def set_background(png_file):
     bin_str = get_base64(png_file)
-    page_bg_img = f'''
+    page_bg_img = '''
     <style>
-    .stApp {{
-        background-image: url("data:image/png;base64,{bin_str}");
-        background-size: cover;
-        color: black !important;
-    }}
-    h1, h2, h3, h4, h5, h6, p, div, span, label, input, textarea, .stMarkdown, .css-1v3fvcr {{
-        color: black !important;
-    }}
-    .stDataFrame th, .stDataFrame td {{
-        color: black !important;
-    }}
+    .stApp {
+    background-image: url("data:image/png;base64,%s");
+    background-size: cover;
+    }
     </style>
-    '''
+    ''' % bin_str
     st.markdown(page_bg_img, unsafe_allow_html=True)
-
 
 # Set page configuration (MUST be the first Streamlit command)
 st.set_page_config(
