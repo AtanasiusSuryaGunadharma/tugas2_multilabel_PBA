@@ -32,21 +32,6 @@ def set_background(png_file):
     </style>
     ''' % bin_str
     st.markdown(page_bg_img, unsafe_allow_html=True)
-
-# Menambahkan audio autoplay menggunakan HTML
-try:
-    with open(r"Lagu_stecu.mp3", "rb") as audio_file:
-        audio_base64 = base64.b64encode(audio_file.read()).decode()
-
-    audio_html = f"""
-    <audio autoplay loop>
-        <source src="data:audio/mpeg;base64,{audio_base64}" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
-    """
-    st.markdown(audio_html, unsafe_allow_html=True)
-except FileNotFoundError:
-    st.error("File audio tidak ditemukan. Pastikan 'natal_lagu3.mp3' sudah ada di direktori project.")
     
 st.set_page_config(page_title="Model Training", layout="wide")
 st.title("Model Training")
@@ -145,6 +130,20 @@ if st.button("Train Model"):
                         mcm[label_idx], label_columns[label_idx])
                     st.pyplot(fig)
                     plt.close(fig)
-                    
+# Menambahkan audio autoplay menggunakan HTML
+try:
+    with open(r"Lagu_stecu.mp3", "rb") as audio_file:
+        audio_base64 = base64.b64encode(audio_file.read()).decode()
+
+    audio_html = f"""
+    <audio autoplay loop>
+        <source src="data:audio/mpeg;base64,{audio_base64}" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    """
+    st.markdown(audio_html, unsafe_allow_html=True)
+except FileNotFoundError:
+    st.error("File audio tidak ditemukan. Pastikan 'natal_lagu3.mp3' sudah ada di direktori project.")
+    
 # Change Background Streamlit
 set_background(r"background_music.gif")
