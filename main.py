@@ -28,9 +28,6 @@ def set_background(png_file):
     ''' % bin_str
     st.markdown(page_bg_img, unsafe_allow_html=True)
 
-# Change Background Streamlit
-set_background(r"background_music.gif")
-
 # Set page configuration (MUST be the first Streamlit command)
 st.set_page_config(
     page_title="Multi-label Text Classification",
@@ -90,6 +87,9 @@ except FileNotFoundError:
 # Show dataset overview
 st.subheader("Dataset Overview")
 df = st.session_state.df
+
+# Change Background Streamlit
+set_background(r"background_music.gif")
 st.write(f"Number of samples: {df.shape[0]}")
 st.write(f"Number of features: {df.shape[1]}")
 st.dataframe(df.head(5))
