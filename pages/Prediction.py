@@ -35,6 +35,26 @@ if st.session_state.trained_model is None:
     model_status = st.empty()
 else:
     st.success(f"Using trained {st.session_state.model_name} model")
+  
+def get_base64(bin_file):
+    with open(bin_file, 'rb') as f:
+        data = f.read()
+    return base64.b64encode(data).decode()
+  
+# Menambahkan audio autoplay menggunakan HTML
+try:
+    with open(r"Lagu_stecu.mp3", "rb") as audio_file:
+        audio_base64 = base64.b64encode(audio_file.read()).decode()
+
+    audio_html = f"""
+    <audio autoplay loop>
+        <source src="data:audio/mpeg;base64,{audio_base64}" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    """
+    st.markdown(audio_html, unsafe_allow_html=True)
+except FileNotFoundError:
+    st.error("File audio tidak ditemukan. Pastikan 'natal_lagu3.mp3' sudah ada di direktori project.")
 
 if st.button("Predict"):
     st.info("Predicting...")
@@ -151,11 +171,6 @@ if st.button("Predict"):
                 st.write("No prediction")
     else:
         st.write("No labels predicted.")
-
-def get_base64(bin_file):
-    with open(bin_file, 'rb') as f:
-        data = f.read()
-    return base64.b64encode(data).decode()
     
 def set_background(png_file):
     bin_str = get_base64(png_file)
@@ -168,21 +183,6 @@ def set_background(png_file):
     </style>
     ''' % bin_str
     st.markdown(page_bg_img, unsafe_allow_html=True)
-
-# Menambahkan audio autoplay menggunakan HTML
-try:
-    with open(r"Lagu_stecu.mp3", "rb") as audio_file:
-        audio_base64 = base64.b64encode(audio_file.read()).decode()
-
-    audio_html = f"""
-    <audio autoplay loop>
-        <source src="data:audio/mpeg;base64,{audio_base64}" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
-    """
-    st.markdown(audio_html, unsafe_allow_html=True)
-except FileNotFoundError:
-    st.error("File audio tidak ditemukan. Pastikan 'natal_lagu3.mp3' sudah ada di direktori project.")
-    
+  
 # Change Background Streamlit
 set_background(r"background_music.gif")
